@@ -1,0 +1,360 @@
+//14.06.01
+#include <stdio.h>
+#include <conio.h>
+#include <Windows.h>
+
+typedef struct _CAN_
+{
+	int nType;
+	int nAccount;
+	int nOpen;
+}CAN;
+
+CAN g_sCan[9];
+char *g_CanShape[9] = {"〡", "〥", "〩", "十", "卄", "〤", "Ⅹ", "〦", "〨"};
+char *g_CanName[9] = {"餌檜棻", "屬塭", "�級�", "瑰瑰", "衝��", "葆遴ず", "啪饜溯檜", "溯蝶綠", "螃溶雖輿蝶"};
+int g_nCanAccount[] = {500, 500, 500, 700, 700, 600, 600, 500, 800};
+int g_nAccountUnit[] = {1000, 500, 100, 50, 10};
+int g_nCanOutIndex[6] = {0};
+
+int g_nAccount; //⑷營 旎擋
+int g_nRemainAccount; //濤擋
+int g_nRemainAccountOut; //濤絲 釭螃朝 擋熱
+int g_nExtractCanIndex; // 鉻朝 警曖 檣策蝶
+int g_nExtractCount; // 鉻擊熱 氈朝 警曖 偃熱
+int g_nCanOutCnt = 0;
+
+void gotoxy(int x, int y)
+{
+	COORD CursorPosition = {x, y};
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), CursorPosition);
+}
+
+void CanMachine()
+{
+	printf("忙式式式式式式式式式式式式式式式式式式式式成式式式式式式忖\n");
+	printf("弛                                        弛 警 濠っ晦  弛\n");
+	printf("弛                                        弛            弛\n");
+	printf("弛                                        弛 ⑷營 旎擋  弛\n");
+	printf("弛     [1]          [2]           [3]     弛            弛\n");
+	printf("弛                                        弛            弛\n");
+	printf("弛                                        弛            弛\n");
+	printf("弛                                        弛            弛\n");
+	printf("弛                                        弛    濤擋    弛\n");
+	printf("弛     [4]          [5]           [6]     弛            弛\n");
+	printf("弛                                        弛            弛\n");
+	printf("弛                                        弛            弛\n");
+	printf("弛                                        弛            弛\n");
+	printf("弛                                        弛            弛\n");
+	printf("弛     [7]          [8]           [9]     弛            弛\n");
+	printf("戍式式式式式式式式式式式式式式式式式式式式扛式式式式式式扣\n");
+	printf("弛                   忙式式式式式式忖   忙式式式式式式忖弛\n");
+	printf("弛                   弛警 釭螃朝 夠弛   弛濤絲釭螃朝夠弛弛\n");
+	printf("弛                   弛            弛   弛            弛弛\n");
+	printf("弛                   弛            弛   弛            弛弛\n");
+	printf("弛                   戌式式式式式式戎   戌式式式式式式戎弛\n");
+	printf("戌式式式式式式式式式式式式式式式式式式式式式式式式式式式戎\n");
+}
+
+void CanOutput(int nIndex)
+{
+	int i;
+	int x = 23;
+	
+	g_nCanOutIndex[g_nCanOutCnt] = nIndex; 
+		
+	for(i=0 ; i<=g_nCanOutCnt ; i++)
+	{
+		gotoxy(x, 19);
+		printf("%s", g_CanShape[g_nCanOutIndex[i]]);
+		x+=2;
+	}
+
+	g_nCanOutCnt++;
+
+	if(g_nCanOutCnt == 6)
+		g_nCanOutCnt = 0;
+}
+
+void CanRemove()
+{
+	int i, j=10;
+	for(i=g_nCanOutCnt ; i>=0 ; i--)
+	{
+		gotoxy(23+j, 19);
+		printf("  ");
+		j-=2;
+		Sleep(500);
+	}
+	g_nCanOutCnt = 0;
+}
+
+int MainMenu()
+{
+	int nKey;
+	gotoxy(0, 22);
+	printf("1. 絲厥晦 2. 警 摹鷗 3. 濤絲 嫡晦 4. 警 嫡晦 5. 謙猿  [          ]");
+	gotoxy(60, 22);
+	scanf("%d", &nKey);
+	return nKey;
+}
+
+void SubMenu1()
+{
+	int num = 0, i, j;
+	while(num != 6)
+	{
+		gotoxy(0, 22);
+		printf("旎擋擊 癱殮ж撮蹂![   ]                                                 \n");
+		printf("(1.1000錳 2.500錳 3.100錳 4. 50錳 5.10錳 6.癱殮諫猿)");
+		gotoxy(20, 22); 
+		scanf("%d", &num);
+		switch(num)
+		{
+		case 1:
+			g_nAccount += g_nAccountUnit[0];
+			break;
+		case 2:
+			g_nAccount += g_nAccountUnit[1];
+			break;
+		case 3:
+			g_nAccount += g_nAccountUnit[2];
+			break;
+		case 4:
+			g_nAccount += g_nAccountUnit[3];
+			break;
+		case 5:
+			g_nAccount += g_nAccountUnit[4];
+			break;
+		default:
+			break;
+		}
+		for(i=0 ; i<3 ; i++)
+		{
+			for(j=0 ; j<3 ; j++)
+			{
+				if(g_sCan[i*3 + j].nAccount <= (g_nRemainAccount + g_nAccount))
+				{
+					g_sCan[i*3 + j].nOpen = 1;
+					g_nExtractCount++;
+				}
+				else
+					g_sCan[i*3 + j].nOpen = 0;
+
+				if(g_sCan[i*3 + j].nOpen)
+				{
+					gotoxy(j*13 + 6 - strlen(g_CanName[g_sCan[i*3 + j].nType])/2, 
+							i*5 + 2);
+					printf("%s", "≠");
+					gotoxy(j*13 + 8 + strlen(g_CanName[g_sCan[i*3 + j].nType])/2,
+							i*5 + 2);
+					printf("%s", "≠");
+				}
+			}
+		}
+		
+		gotoxy(47, 4);
+		printf("%-5d", g_nAccount);
+	}
+}
+
+int SubMenu2()
+{
+	int nKey;
+	gotoxy(0, 22);
+	printf("警擊 摹鷗п 輿撮蹂! [             ]                                ");
+	gotoxy(23, 22);
+	scanf("%d", &nKey);
+	return nKey;
+}
+
+void SubMenu3()
+{
+	int i;
+	g_nRemainAccountOut = 0;
+
+	for(i=0 ; i<5 ; i++)
+	{
+		while(g_nRemainAccount >= g_nAccountUnit[i])
+		{
+			g_nRemainAccount = g_nRemainAccount - g_nAccountUnit[i];
+			g_nRemainAccountOut = g_nRemainAccountOut + g_nAccountUnit[i];  
+		
+			gotoxy(47, 9);
+			printf("%-5d", g_nRemainAccount);
+
+			Sleep(600);
+
+			gotoxy(43, 19);
+			printf("%-5d", g_nRemainAccountOut);
+		}
+	}
+
+	for(i=0 ; i<5 ; i++)
+	{
+		while(g_nAccount >= g_nAccountUnit[i])
+		{
+			g_nAccount = g_nAccount - g_nAccountUnit[i];
+			g_nRemainAccountOut =  g_nRemainAccountOut + g_nAccountUnit[i];  
+			
+			gotoxy(47, 4);
+			printf("%-5d", g_nAccount);
+
+			Sleep(600);
+
+			gotoxy(43, 19);
+			printf("%-5d", g_nRemainAccountOut);
+		}
+	}
+}
+
+
+void Init()
+{
+	int i;
+	for(i=0 ; i<9 ; i++)
+	{
+		g_sCan[i].nType = i;
+		g_sCan[i].nAccount = g_nCanAccount[i];
+		g_sCan[i].nOpen = 0;
+	}
+	
+	g_nExtractCanIndex = -1;
+	g_nExtractCount = 0;
+	g_nAccount = 0;
+	g_nRemainAccount = 0;
+}
+
+void CanContent()
+{
+	int i, j;
+	for(i=0 ; i<3 ; i++)
+	{
+		for(j=0 ; j<3 ; j++)
+		{
+			gotoxy(j*13 + 8, i*5 +1);
+			printf("%s", g_CanShape[g_sCan[i*3 + j].nType]);
+			gotoxy(j*13+8 - strlen(g_CanName[g_sCan[i*3 + j].nType])/2,
+					i*5 +2);
+			printf("%s", g_CanName[g_sCan[i*3 + j].nType]);
+
+			if(g_sCan[i*3 + j].nOpen)
+			{
+				gotoxy(j*13 + 6 - strlen(g_CanName[g_sCan[i*3 + j].nType])/2,
+						i*5 + 2);
+				printf("%s", "≠");
+				gotoxy(j*13 + 8 + strlen(g_CanName[g_sCan[i*3 + j].nType])/2,
+						i*5 + 2);
+				printf("%s", "≠");
+			}
+			
+			gotoxy(j*13 + 5, i*5 + 3);
+			printf("(%d錳)", g_sCan[i*3 + j].nAccount);
+		}
+	}
+
+	gotoxy(47, 4);
+	printf("%-5d", g_nAccount);
+	gotoxy(47, 9);
+	printf("%-5d", g_nRemainAccount);
+}
+			
+int main(void)
+{
+	int i, nKey;
+
+	Init();
+	
+	while(1)
+	{
+		system("cls");
+		CanMachine();
+		CanContent();
+
+		if(g_nExtractCanIndex > -1)
+			CanOutput(g_nExtractCanIndex);
+
+		nKey = MainMenu();
+
+		if(nKey == 5)
+			break;
+
+		switch(nKey)
+		{
+		case 1:
+			SubMenu1();
+			g_nExtractCount = 0;
+			for(i=0 ; i<9 ; i++)
+			{
+				if(g_sCan[i].nAccount <= g_nAccount + g_nRemainAccount)
+				{
+					g_sCan[i].nOpen = 1;
+					g_nExtractCount++;
+				}
+				else
+					g_sCan[i].nOpen = 0;
+			}
+
+			if(g_nCanOutCnt != 0)
+				g_nCanOutCnt--;
+
+			break;
+		case 2:
+			if(g_nAccount > 0)
+			{
+				g_nRemainAccount += g_nAccount;
+				g_nAccount = 0;
+			}
+
+			if(g_nExtractCount < 1)
+			{
+				gotoxy(0, 22);
+				printf("絲擊 癱殮п輿撮蹂.                                                                ");
+				Sleep(1300);
+				break;
+			}
+
+			while(1)
+			{
+				nKey = SubMenu2();
+				if(nKey >= 1 && nKey <= 9)
+				{
+					g_nExtractCanIndex = nKey - 1;
+					if(!g_sCan[g_nExtractCanIndex].nOpen)
+						continue;
+					g_nRemainAccount -= g_sCan[g_nExtractCanIndex].nAccount;
+					g_nExtractCount = 0;
+
+					for(i=0 ; i<9 ; i++)
+					{
+						if(g_sCan[i].nAccount <= g_nRemainAccount)
+						{
+							g_sCan[i].nOpen = 1;
+							g_nExtractCount++;
+						}
+						else
+							g_sCan[i].nOpen = 0;
+					}
+					break;
+				}
+			}
+			break;
+		case 3:
+			if(g_nCanOutCnt != 0)
+				g_nCanOutCnt--;
+			for(i=0 ; i<9 ; i++)
+			{
+				g_sCan[i].nOpen = 0;
+			}
+			SubMenu3();
+			break;
+		case 4:
+			g_nExtractCanIndex = -1;
+			CanRemove();
+			break;
+		}
+	}
+
+	return 0;
+}
+
