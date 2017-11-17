@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">경북대올인원</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="choose_place">학생식당</string>
+    <string-array name="eating_place">
+        <item>교내식당</item>
+        <item>GP감꽃푸드코트</item>
+        <item>GP일청담</item>
+        <item>공학관 교직원식당</item>
+        <item>공학관 학생식당</item>
+        <item>복지관 교직원식당</item>
+        <item>복지관 학생식당</item>
+        <item>복현회관 교직원식당</item>
+        <item>복현회관 학생식당</item>
+        <item>정보센터식당</item>
+    </string-array>
+    <string name="choose_day">요일</string>
+    <string-array name="day7">
+        <item>요일</item>
+        <item>월요일</item>
+        <item>화요일</item>
+        <item>수요일</item>
+        <item>목요일</item>
+        <item>금요일</item>
+        <item>토요일</item>
+        <item>일요일</item>
+    </string-array>
+    <string-array name="day5">
+        <item>요일</item>
+        <item>월요일</item>
+        <item>화요일</item>
+        <item>수요일</item>
+        <item>목요일</item>
+        <item>금요일</item>
+    </string-array>
+    <string-array name="time3">
+        <item>시간</item>
+        <item>조식</item>
+        <item>중식</item>
+        <item>석식</item>
+    </string-array>
+    <string-array name="time2">
+        <item>시간</item>
+        <item>중식</item>
+        <item>석식</item>
+    </string-array>
+    <string-array name="time1">
+        <item>시간</item>
+        <item>중식</item>
+    </string-array>
+</resources>

@@ -1,0 +1,77 @@
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+        <RelativeLayout
+            android:id="@+id/R1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="열람실"
+                android:layout_marginLeft="40dp"
+                android:singleLine="true"
+                android:id="@+id/tv_library"
+                android:textColor="#000000"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전체좌석"
+                android:singleLine="true"
+                android:id="@+id/tv_allseat"
+                android:layout_toLeftOf="@+id/tv_usedseat"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사용좌석"
+                android:singleLine="true"
+                android:id="@+id/tv_usedseat"
+                android:layout_toLeftOf="@+id/tv_emptyseat"
+                android:layout_marginEnd="23dp"
+                android:layout_marginRight="23dp"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:textSize="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="잔여좌석"
+                android:singleLine="true"
+                android:id="@+id/tv_emptyseat"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:layout_marginRight="2dp"/>
+
+        </RelativeLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            android:scrollbars="none"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:divider="@null"
+            android:layout_below="@+id/R1" />
+    </RelativeLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>
